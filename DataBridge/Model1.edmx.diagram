@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b2ecfa565e684075a01db7254cdd5bf3" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="ColledgeModel.Dist" Width="1.5" PointX="9" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColledgeModel.Expelled_students" Width="1.5" PointX="15.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColledgeModel.GPA" Width="1.5" PointX="5.875" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColledgeModel.Groups" Width="1.5" PointX="8.5" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColledgeModel.Kat" Width="1.5" PointX="13" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColledgeModel.Marks" Width="1.5" PointX="6.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColledgeModel.RUP" Width="1.5" PointX="17" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColledgeModel.Spec" Width="1.5" PointX="11.625" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColledgeModel.Students" Width="1.5" PointX="3.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColledgeModel.sysdiagrams" Width="1.5" PointX="17.625" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColledgeModel.Trainer" Width="1.5" PointX="15.625" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="ColledgeModel.FK_Marks_Dist" ManuallyRouted="false" />
+        <AssociationConnector Association="ColledgeModel.FK_RUP_Dist" ManuallyRouted="false" />
+        <AssociationConnector Association="ColledgeModel.FK_GPA_Students" ManuallyRouted="false" />
+        <AssociationConnector Association="ColledgeModel.FK_Groups_Spec" ManuallyRouted="false" />
+        <AssociationConnector Association="ColledgeModel.FK_Students_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="ColledgeModel.FK_RUP_Kat" ManuallyRouted="false" />
+        <AssociationConnector Association="ColledgeModel.FK_Marks_Students" ManuallyRouted="false" />
+        <AssociationConnector Association="ColledgeModel.FK_RUP_Spec" ManuallyRouted="false" />
+        <AssociationConnector Association="ColledgeModel.FK_RUP_Trainer" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ColledgeModel.DB_Users" Width="1.5" PointX="8.375" PointY="3.625" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

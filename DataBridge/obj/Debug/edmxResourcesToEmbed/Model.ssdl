@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище ColledgeModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Dist">
+    <Key>
+      <PropertyRef Name="ID_Дисциплины" />
+    </Key>
+    <Property Name="ID_Дисциплины" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Название_дисциплины" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Expelled_students">
+    <Key>
+      <PropertyRef Name="IDStudent" />
+    </Key>
+    <Property Name="IDStudent" Type="int" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="255" />
+    <Property Name="IdGroup" Type="int" />
+    <Property Name="DropDate" Type="datetime" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "Colledge.dbo.GPA" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="GPA">
+          <Property Name="ID_Студента" Type="int" />
+          <Property Name="gpa" Type="float" />
+        </EntityType>-->
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="ID_Группы" />
+    </Key>
+    <Property Name="ID_Группы" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Группа" Type="nvarchar" MaxLength="255" />
+    <Property Name="ID_Специальности" Type="int" />
+  </EntityType>
+  <EntityType Name="Kat">
+    <Key>
+      <PropertyRef Name="ID_Категории" />
+    </Key>
+    <Property Name="ID_Категории" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="категория_дисциплины" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Marks">
+    <Key>
+      <PropertyRef Name="ID_Оценки" />
+    </Key>
+    <Property Name="ID_Оценки" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Дисциплины" Type="int" />
+    <Property Name="Семестр" Type="int" />
+    <Property Name="ID_Студента" Type="int" />
+    <Property Name="Дата_сдачи" Type="date" />
+    <Property Name="Оценка" Type="float" />
+  </EntityType>
+  <EntityType Name="RUP">
+    <Key>
+      <PropertyRef Name="ID_RUP" />
+    </Key>
+    <Property Name="ID_RUP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Дисциплины" Type="int" />
+    <Property Name="ID_Специальности" Type="int" />
+    <Property Name="ID_Категории" Type="int" />
+    <Property Name="ID_Преподавателя" Type="int" />
+    <Property Name="семестр" Type="int" />
+    <Property Name="вид_аттестации" Type="nvarchar" MaxLength="255" />
+    <Property Name="Количество_часов" Type="int" />
+  </EntityType>
+  <EntityType Name="Spec">
+    <Key>
+      <PropertyRef Name="ID_Специальности" />
+    </Key>
+    <Property Name="ID_Специальности" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="специальность" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="ID_Студента" />
+    </Key>
+    <Property Name="ID_Студента" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ФИО_студента" Type="nvarchar" MaxLength="255" />
+    <Property Name="Электронная_почта_студента" Type="nvarchar" MaxLength="255" />
+    <Property Name="Телефон" Type="nvarchar" MaxLength="255" />
+    <Property Name="адрес" Type="nvarchar" MaxLength="255" />
+    <Property Name="Дата_рождения" Type="datetime" />
+    <Property Name="ID_Группы" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Trainer">
+    <Key>
+      <PropertyRef Name="ID_Преподавателя" />
+    </Key>
+    <Property Name="ID_Преподавателя" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="преподаватель" Type="nvarchar" MaxLength="255" />
+    <Property Name="категория_преподавателя" Type="nvarchar" MaxLength="255" />
+    <Property Name="стаж" Type="float" />
+  </EntityType>
+  <Association Name="FK_Groups_Spec">
+    <End Role="Spec" Type="Self.Spec" Multiplicity="0..1" />
+    <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Spec">
+        <PropertyRef Name="ID_Специальности" />
+      </Principal>
+      <Dependent Role="Groups">
+        <PropertyRef Name="ID_Специальности" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Marks_Dist">
+    <End Role="Dist" Type="Self.Dist" Multiplicity="0..1" />
+    <End Role="Marks" Type="Self.Marks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dist">
+        <PropertyRef Name="ID_Дисциплины" />
+      </Principal>
+      <Dependent Role="Marks">
+        <PropertyRef Name="ID_Дисциплины" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Marks_Students">
+    <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+    <End Role="Marks" Type="Self.Marks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="ID_Студента" />
+      </Principal>
+      <Dependent Role="Marks">
+        <PropertyRef Name="ID_Студента" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RUP_Dist">
+    <End Role="Dist" Type="Self.Dist" Multiplicity="0..1" />
+    <End Role="RUP" Type="Self.RUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dist">
+        <PropertyRef Name="ID_Дисциплины" />
+      </Principal>
+      <Dependent Role="RUP">
+        <PropertyRef Name="ID_Дисциплины" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RUP_Kat">
+    <End Role="Kat" Type="Self.Kat" Multiplicity="0..1" />
+    <End Role="RUP" Type="Self.RUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kat">
+        <PropertyRef Name="ID_Категории" />
+      </Principal>
+      <Dependent Role="RUP">
+        <PropertyRef Name="ID_Категории" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RUP_Spec">
+    <End Role="Spec" Type="Self.Spec" Multiplicity="0..1" />
+    <End Role="RUP" Type="Self.RUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Spec">
+        <PropertyRef Name="ID_Специальности" />
+      </Principal>
+      <Dependent Role="RUP">
+        <PropertyRef Name="ID_Специальности" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RUP_Trainer">
+    <End Role="Trainer" Type="Self.Trainer" Multiplicity="0..1" />
+    <End Role="RUP" Type="Self.RUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trainer">
+        <PropertyRef Name="ID_Преподавателя" />
+      </Principal>
+      <Dependent Role="RUP">
+        <PropertyRef Name="ID_Преподавателя" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Groups">
+    <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="ID_Группы" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="ID_Группы" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="AddDist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NameDist" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="AddGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="GroupName" Type="nvarchar" Mode="In" />
+    <Parameter Name="SpecID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="AddRUP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DistID" Type="int" Mode="In" />
+    <Parameter Name="SpecID" Type="int" Mode="In" />
+    <Parameter Name="KatID" Type="int" Mode="In" />
+    <Parameter Name="TrainerID" Type="int" Mode="In" />
+    <Parameter Name="Semestr" Type="int" Mode="In" />
+    <Parameter Name="VA" Type="nvarchar" Mode="In" />
+    <Parameter Name="CountOfHours" Type="int" Mode="In" />
+  </Function>
+  <Function Name="AddSpec" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SpecName" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="AddStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StudentID" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+    <Parameter Name="Email" Type="nvarchar" Mode="In" />
+    <Parameter Name="PhoneNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="Adress" Type="nvarchar" Mode="In" />
+    <Parameter Name="BirthDate" Type="datetime" Mode="In" />
+    <Parameter Name="GroupID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeleteDist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DistID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeleteGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="GroupID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeleteRUP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RUPID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeleteSpec" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SpecID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeleteStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StudentID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="UpdateDist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DistID" Type="int" Mode="In" />
+    <Parameter Name="NameDist" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="UpdateGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="GroupID" Type="int" Mode="In" />
+    <Parameter Name="GroupName" Type="nvarchar" Mode="In" />
+    <Parameter Name="SpecID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UpdateRUP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RUPID" Type="int" Mode="In" />
+    <Parameter Name="DistID" Type="int" Mode="In" />
+    <Parameter Name="SpecID" Type="int" Mode="In" />
+    <Parameter Name="KatID" Type="int" Mode="In" />
+    <Parameter Name="TrainerID" Type="int" Mode="In" />
+    <Parameter Name="Semestr" Type="int" Mode="In" />
+    <Parameter Name="VA" Type="nvarchar" Mode="In" />
+    <Parameter Name="CountOfHours" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UpdateSpec" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SpecID" Type="int" Mode="In" />
+    <Parameter Name="SpecName" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="UpdateStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StudentID" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+    <Parameter Name="Email" Type="nvarchar" Mode="In" />
+    <Parameter Name="PhoneNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="Adress" Type="nvarchar" Mode="In" />
+    <Parameter Name="BirthDate" Type="datetime" Mode="In" />
+    <Parameter Name="GroupID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Vedom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="GroupID" Type="int" Mode="In" />
+    <Parameter Name="DistID" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="Хранилище ColledgeModelContainer">
+    <EntitySet Name="Dist" EntityType="Self.Dist" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Expelled_students" EntityType="Self.Expelled_students" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kat" EntityType="Self.Kat" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Marks" EntityType="Self.Marks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RUP" EntityType="Self.RUP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Spec" EntityType="Self.Spec" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trainer" EntityType="Self.Trainer" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Groups_Spec" Association="Self.FK_Groups_Spec">
+      <End Role="Spec" EntitySet="Spec" />
+      <End Role="Groups" EntitySet="Groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Marks_Dist" Association="Self.FK_Marks_Dist">
+      <End Role="Dist" EntitySet="Dist" />
+      <End Role="Marks" EntitySet="Marks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Marks_Students" Association="Self.FK_Marks_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="Marks" EntitySet="Marks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RUP_Dist" Association="Self.FK_RUP_Dist">
+      <End Role="Dist" EntitySet="Dist" />
+      <End Role="RUP" EntitySet="RUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RUP_Kat" Association="Self.FK_RUP_Kat">
+      <End Role="Kat" EntitySet="Kat" />
+      <End Role="RUP" EntitySet="RUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RUP_Spec" Association="Self.FK_RUP_Spec">
+      <End Role="Spec" EntitySet="Spec" />
+      <End Role="RUP" EntitySet="RUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RUP_Trainer" Association="Self.FK_RUP_Trainer">
+      <End Role="Trainer" EntitySet="Trainer" />
+      <End Role="RUP" EntitySet="RUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_Groups" Association="Self.FK_Students_Groups">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
